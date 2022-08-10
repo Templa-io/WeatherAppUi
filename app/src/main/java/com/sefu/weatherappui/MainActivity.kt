@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sefu.weatherappui.screens.WeatherScreenTwo
 import com.sefu.weatherappui.ui.theme.WeatherAppUiTheme
 
 class MainActivity : ComponentActivity() {
@@ -32,7 +33,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             WeatherAppUiTheme {
-                MainScreen()
+//                MainScreen()
+                WeatherScreenTwo()
 
             }
         }
@@ -50,6 +52,7 @@ Column (horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement 
     .fillMaxSize()
     .padding(horizontal = 50.dp, vertical = 40.dp)){
     TopBar()
+    Spacer(modifier = Modifier.height(50.dp))
     WeatherContent()
 }
 }
@@ -60,6 +63,7 @@ fun TopBar(modifier: Modifier=Modifier) {
             contentAlignment = Alignment.Center, modifier = Modifier
                 .clip(shape = RoundedCornerShape(8.dp))
                 .size(width = 80.dp, height = 40.dp)
+                .clickable { }
                 .background(color = Color.Gray.copy(0.2F))
         ) {
             Text(text = "skip")
@@ -70,7 +74,7 @@ fun TopBar(modifier: Modifier=Modifier) {
 
 @Composable
 fun WeatherContent(modifier: Modifier=Modifier) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(20.dp),modifier = modifier.fillMaxWidth()) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(28.dp),modifier = modifier.fillMaxWidth()) {
 
 
 
@@ -87,13 +91,14 @@ fun WeatherContent(modifier: Modifier=Modifier) {
             colorResource(id = R.color.color_1)) )
         Text(text = "Get to know your weather maps and climate preception forecast", textAlign = TextAlign.Center, fontSize = 20.sp,style = TextStyle(color = Color.Gray))
 
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(2.dp))
 
 Card(elevation = 24.dp, shape = RoundedCornerShape(16.dp)) {
     Box(contentAlignment = Alignment.Center,modifier = Modifier
         .clip(shape = RoundedCornerShape(12.dp))
         .size(width = 250.dp, height = 50.dp)
-        .background(colorResource(id = R.color.color_2))) {
+        .background(colorResource(id = R.color.color_2))
+        .clickable { }) {
         Text(text ="Get Started", fontSize = 24.sp )
     }
 }
