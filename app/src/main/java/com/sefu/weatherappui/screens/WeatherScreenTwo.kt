@@ -21,6 +21,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -36,10 +37,18 @@ import kotlinx.coroutines.CoroutineStart
 
 @Composable
 fun WeatherScreenTwo(modifier: Modifier=Modifier) {
-    Box(modifier = modifier.fillMaxSize()) {
-        TopBar()
+    Box(modifier = modifier
+        .fillMaxSize()
+        .background(colorResource(id = R.color.color_1))) {
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(38.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(50.dp)) {
+            TopBar()
+            LocationContent()
+            WeatherBody(name = "28°")
+                WeatherItems()
+        }
 
-//        LocationContent(name = "")
     }
 
 }
@@ -48,17 +57,17 @@ fun WeatherScreenTwo(modifier: Modifier=Modifier) {
 fun TopBar(modifier: Modifier=Modifier) {
     Row(modifier=modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
         Box(contentAlignment = Alignment.Center,modifier = Modifier
-            .clip(shape = RoundedCornerShape(20.dp))
-            .size(40.dp)
+            .clip(shape = RoundedCornerShape(30.dp))
+            .size(60.dp)
             .background(color = Color.Gray.copy(0.3F))) {
-            Icon(Icons.Outlined.Menu, contentDescription ="Menu" )
+            Icon(Icons.Outlined.Menu, contentDescription ="Menu", tint = Color.White )
 
         }
         Box(contentAlignment = Alignment.Center,modifier = Modifier
-            .clip(shape = RoundedCornerShape(20.dp))
-            .size(40.dp)
+            .clip(shape = RoundedCornerShape(30.dp))
+            .size(60.dp)
             .background(color = Color.Gray.copy(0.3F))){
-Icon(Icons.Outlined.Settings, contentDescription ="settings" )
+Icon(Icons.Outlined.Settings, contentDescription ="settings",tint = Color.White  )
         }
     }
 
@@ -67,61 +76,83 @@ Icon(Icons.Outlined.Settings, contentDescription ="settings" )
 @Composable
 fun LocationContent(modifier: Modifier=Modifier) {
     Column(modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-        Text(text = "Badakshan", fontSize = 30.sp, )
-        Text(text = "Chance of Rain: 15%",style = TextStyle(color = Color.Gray))}}
+        Text(text = "Badakhshan", fontSize = 36.sp ,style= TextStyle(color = Color.White))
+        Text(text = "Chance of Rain: 15%",fontSize = 24.sp ,style = TextStyle(color = Color.White))}}
 
-    @Composable
+@Composable
     fun WeatherBody(name:String,modifier: Modifier=Modifier) {
-        Box(contentAlignment = Alignment.TopCenter,modifier = modifier.fillMaxWidth()) {
+        Box(modifier = modifier.size(width=150.dp, height =300.dp ),contentAlignment = Alignment.TopCenter ) {
 
-            Box(modifier = Modifier
-                .size(height=100.dp,width=200.dp)
-                .padding(), contentAlignment = Alignment.TopCenter) {
+Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceBetween) {
 
-                val paint = Paint().asFrameworkPaint()
 
-                val gradientShader: Shader = LinearGradientShader(
-                    from = Offset(0f, 0f),
-                    to = Offset(0f, 400f),
-                    listOf(Color.White, Color.Gray)
-                )
+    val paint = Paint().asFrameworkPaint()
 
-                Canvas(modifier.fillMaxWidth()) {
-                    paint.apply {
-                        isAntiAlias = true
-                        textSize = 400f
-                        style = android.graphics.Paint.Style.FILL
+    val gradientShader: Shader = LinearGradientShader(
+        from = Offset(0f, 0f),
+        to = Offset(0f, 400f),
+        listOf(Color.White, Color.Gray)
+    )
+
+    Canvas(modifier.fillMaxWidth()) {
+        paint.apply {
+            isAntiAlias = true
+            textSize = 200f
+            style = android.graphics.Paint.Style.FILL
 //                        typeface = Typeface.create(CoroutineStart.DEFAULT, Typeface.BOLD)
-                        color = android.graphics.Color.parseColor("#cdcdcd")
-                        xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OVER)
-                        maskFilter = BlurMaskFilter(30f, BlurMaskFilter.Blur.NORMAL)
-                    }
-                    drawIntoCanvas { canvas ->
-                        canvas.save()
-                        canvas.nativeCanvas.translate(2f, 5f)
-                        canvas.nativeCanvas.drawText(name, 0f, 400f, paint)
-                        canvas.restore()
-                        paint.shader = gradientShader
-                        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-                        paint.maskFilter = null
-                        canvas.nativeCanvas.drawText(name, 0f, 400f, paint)
-                        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OVER)
-                        canvas.nativeCanvas.drawText(name, 0f, 400f, paint)
-                    }
-                    paint.reset()
-                }
-            }
-            Box(modifier = Modifier
-                .padding(end = 36.dp)
-                .size(height = 250.dp, width = 250.dp), contentAlignment = Alignment.BottomCenter) {
-                Image(painter = painterResource(id = R.drawable.cloudy), contentDescription =null, modifier = Modifier.size(150.dp), )
-            }
+            color = android.graphics.Color.parseColor("#cdcdcd")
+            xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OVER)
+            maskFilter = BlurMaskFilter(30f, BlurMaskFilter.Blur.NORMAL)
+        }
+        drawIntoCanvas { canvas ->
+            canvas.save()
+            canvas.nativeCanvas.translate(2f, 5f)
+            canvas.nativeCanvas.drawText(name, 0f, 400f, paint)
+            canvas.restore()
+            paint.shader = gradientShader
+            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+            paint.maskFilter = null
+            canvas.nativeCanvas.drawText(name, 0f, 400f, paint)
+            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OVER)
+            canvas.nativeCanvas.drawText(name, 0f, 400f, paint)
+        }
+        paint.reset()
+    }
+
+    Image(
+        painter = painterResource(id = R.drawable.cloudy),
+        contentDescription = null,
+        modifier = Modifier.size(100.dp),
+    )
+}
+
 
         }
 
     }
 
+@Composable
+fun WeatherItems(modifier: Modifier=Modifier) {
+Row(modifier=modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceAround
+) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Image(painter = painterResource(id = R.drawable.calm), modifier = Modifier.size(40.dp), contentDescription = null)
+        Text(text = "2:00 am",style = TextStyle(color = Color.LightGray))
+        Text(text ="32°",fontSize = 20.sp, fontWeight = FontWeight.Bold,style = TextStyle(color = Color.White) )
+    }
+    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Image(painter = painterResource(id = R.drawable.cloudy), modifier = Modifier.size(40.dp),  contentDescription = null)
+        Text(text = "2:00 am",style = TextStyle(color = Color.LightGray))
+        Text(text ="30°",fontSize = 20.sp, fontWeight = FontWeight.Bold, style = TextStyle(color = Color.White))
+    }
+    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Image(painter = painterResource(id = R.drawable.thunder), modifier = Modifier.size(40.dp),  contentDescription = null)
+        Text(text = "2:00 am", style = TextStyle(color = Color.LightGray))
+        Text(text ="29°", fontSize = 20.sp, fontWeight = FontWeight.Bold,style = TextStyle(color = Color.White) )
+    }
 
+}
+}
 
 
 @Preview(showBackground = true)
@@ -153,5 +184,13 @@ fun PreviewLocationContent() {
 fun PreviewWeatherBody() {
     WeatherAppUiTheme {
 WeatherBody(name = "28°")
+    }
+}
+
+@Preview
+@Composable
+fun PreviewWeatherItems() {
+    WeatherAppUiTheme {
+        WeatherItems()
     }
 }
