@@ -47,6 +47,7 @@ fun WeatherScreenTwo(modifier: Modifier=Modifier) {
             LocationContent()
             WeatherBody(name = "28°")
                 WeatherItems()
+            IconBar()
         }
 
     }
@@ -154,6 +155,11 @@ Row(modifier=modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertic
 }
 }
 
+@Composable
+fun IconBar() {
+
+}
+
 
 @Preview(showBackground = true)
 @Composable
@@ -192,5 +198,13 @@ WeatherBody(name = "28°")
 fun PreviewWeatherItems() {
     WeatherAppUiTheme {
         WeatherItems()
+    }
+}
+
+@Preview
+@Composable
+fun PreviewIconBar() {
+    WeatherAppUiTheme {
+        IconBar()
     }
 }
